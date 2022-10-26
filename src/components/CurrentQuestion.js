@@ -1,17 +1,17 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { quiz } from 'reducers/quiz';
 
 export const CurrentQuestion = () => {
-  const question = useSelector((store) => store.quiz.questions[store.quiz.currentQuestionIndex])
-  const wholeStore = useSelector((store) => store)
-  console.log(wholeStore);
-  console.log(question);
+  const question = useSelector(
+    (store) => store.quiz.questions[store.quiz.currentQuestionIndex]
+  );
+  const questions = useSelector((store) => store.quiz.questions.length);
 
   const dispatch = useDispatch();
 
   if (!question) {
-    return <h1>Oh no! I could not find the current question!</h1>
+    return <h1>Oh no! I could not find the current question!</h1>;
   }
 
   // const onAnswerSubmit = (id, index) => {
@@ -22,9 +22,9 @@ export const CurrentQuestion = () => {
     if (question.correctAnswerIndex === answerIndex) {
       dispatch(quiz.actions.goToNextQuestion());
     } else {
-      window.alert('Sorry, wrong answer!!')
+      window.alert('Sorry, wrong answer!!');
     }
-  }
+  };
 
   return (
     <div>
@@ -34,10 +34,16 @@ export const CurrentQuestion = () => {
           <button
             onClick={() => onAnswerSubmit(question.id, index)}
             key={option}
-            type="button">{option}
+            type="button"
+          >
+            {option}
           </button>
-        )
+        );
       })}
+
+      <p>
+        Question {question.id}/{questions}
+      </p>
     </div>
-  )
-}
+  );
+};
